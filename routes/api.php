@@ -17,11 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+// 以下接口需要识别用户登陆态，因此添加api认证中间件
 Route::group(['middleware' => 'auth:api'], function () {
+    // 视频解析接口
     Route::post('video-parse', 'VideoParseController@parse')->name('video.parse');
-
+// 当前用户解析记录总数
     Route::get('records/total', 'RecordController@getTotalNum');
+ // 当前用户解析记录列表接口
     Route::resource('records', 'RecordController');
 });
 
